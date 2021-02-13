@@ -23,10 +23,10 @@ import platform
 # User modifiable constants
 ###########################
 language_params = {
-        'c++14' : {
-            'TEMPLATE'    : 'main.cc',
+        'c++17' : {
+            'TEMPLATE'    : 'main.cpp',
             'DEBUG_FLAGS' : '-DDEBUG',
-            'COMPILE_CMD' : 'g++ -g -std=c++14 -Wall $DBG',
+            'COMPILE_CMD' : 'g++ -std=c++17 $DBG',
             'RUN_CMD'     : './a.out'
             },
         'go'    : {
@@ -223,8 +223,8 @@ def generate_test_script(folder, language, num_tests, problem):
 def main():
     print (VERSION)
     parser = argparse.ArgumentParser()
-    parser.add_argument('--language', '-l', default="c++14", help="The programming language you want to use "
-            "(c++14, go)")
+    parser.add_argument('--language', '-l', default="c++17", help="The programming language you want to use "
+            "(c++17, go)")
     parser.add_argument('contest', help="")
     args = parser.parse_args()
 
