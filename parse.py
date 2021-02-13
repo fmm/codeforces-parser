@@ -47,8 +47,6 @@ SAMPLE_INPUT='input'
 SAMPLE_OUTPUT='output'
 MY_OUTPUT='my_output'
 
-# Do not modify these!
-VERSION='CodeForces Parser v1.5.1: https://github.com/johnathan79717/codeforces-parser'
 RED_F='\033[31m'
 GREEN_F='\033[32m'
 BOLD='\033[1m'
@@ -236,7 +234,6 @@ def generate_test_script(folder, language, num_tests, problem):
 
 # Main function.
 def main():
-    print (VERSION)
     parser = argparse.ArgumentParser()
     parser.add_argument('--language', '-l', default="c++17", help="The programming language you want to use "
             "(c++17, go)")
