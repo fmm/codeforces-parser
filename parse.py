@@ -160,14 +160,29 @@ def parse_contest(contest):
     parser.feed(html.decode('utf-8'))
     return parser
 
+# Generates auxiliar test script.
+def generate_auxiliar_test_script(folder):
+    with open(folder + 'test.sh', 'w') as test:
+        test.write(
+            '#!/bin/bash\n'
+            'set -xe\n'
+            'export TASK=$1\n'
+            'sh $TASK/test.sh\n')
+    call(['chmod', '+x', folder + 'test.sh'])
+
 # Generates the test script.
 def generate_test_script(folder, language, num_tests, problem):
     param = language_params[language]
 
     with open(folder + 'test.sh', 'w') as test:
         test.write(
-            ('#!/bin/bash\n'
-            'DBG=""\n'
+            '#!/bin/bash\n'
+            'SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"\n'
+            'cd $SCRIPT_DIR\n'
+            '\n')
+
+        test.write(
+            ('DBG=""\n'
             'while getopts ":d" opt; do\n'
             '  case $opt in\n'
             '    d)\n'
@@ -237,6 +252,12 @@ def main():
     print (BOLD+GREEN_F+'*** Round name: '+content.name+' ***'+NORM)
     print ('Found %d problems!' % (len(content.problems)))
 
+    # Generates auxiliar test script
+    if True:
+        folder = '%s/' % (contest)
+        call(['mkdir', '-p', folder])
+        generate_auxiliar_test_script(folder)
+
     # Find problems and test cases.
     TEMPLATE = language_params[language]["TEMPLATE"]
     for index, problem in enumerate(content.problems):
@@ -250,6 +271,7 @@ def main():
         print ('========================================')
 
     print ('Use ./test.sh to run sample tests in each directory.')
+    print ('Or use ./test.sh (A,B,...) to run sample tests for a given task in the contest directory.')
 
 
 if __name__ == '__main__':
